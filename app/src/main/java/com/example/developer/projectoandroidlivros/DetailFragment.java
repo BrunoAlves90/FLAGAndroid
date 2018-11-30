@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailFragment extends Fragment {
 
     private View view;
-    private ImageView ivLivroDetail;
+    private ImageView ivLivro;
     private TextView tvLivroNomeDetail;
     private TextView tvLivroDataDetail;
     private TextView tvLivroDescDetail;
@@ -37,23 +37,19 @@ public class DetailFragment extends Fragment {
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_details, container, false);
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup rvLivros, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_details, rvLivros, false);
         return view;
     }
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated( Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int id = getArguments().getInt("id");
+        String id = getArguments().getString("id");
         Retrofit retrofit = new Retrofit.
                 Builder().
-                baseUrl("https://www.googleapis.com/books/v1/volumes/").
+                baseUrl("https://www.googleapis.com/books/v1/volumes?").
                 addConverterFactory(GsonConverterFactory.create()).
                 build();
 
@@ -62,7 +58,6 @@ public class DetailFragment extends Fragment {
         Call<List<Livro>> livroCall = detailBook.getDetailBook(id);
 
         livroCall.enqueue(new Callback<List<Livro>>() {
-            @Override
             public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response) {
                 if (response.isSuccessful()) {
                     Log.d("Retrofit", "ok");
@@ -73,7 +68,6 @@ public class DetailFragment extends Fragment {
                 }
             }
 
-            @Override
             public void onFailure(Call<List<Livro>> call, Throwable t) {
                 Log.d("RETROFIT", "FAIL");
 
@@ -85,20 +79,18 @@ public class DetailFragment extends Fragment {
 
     private void prepareView(Livro livro) {
 
-    ivLivroDetail = (ImageView) view.findViewById(R.id.ivLivroDetail);
-    tvLivroNomeDetail = (TextView) view.findViewById(R.id.tvLivroNomeDetail);
-    tvLivroDataDetail = (TextView) view.findViewById(R.id.tvLivroDataDetail);
-    tvLivroDescDetail = (TextView) view.findViewById(R.id.tvLivroDescDetail);
+    ivLivro = view.findViewById(R.id.ivLivro);
+    tvLivroNomeDetail = view.findViewById(R.id.tvLivroNomeDetail);
+    tvLivroDataDetail = view.findViewById(R.id.tvLivroDataDetail);
+    tvLivroDescDetail = view.findViewById(R.id.tvLivroDescDetail);
 
 
-    Picasso.get().load(livro.getImageUrl()).into(ivLivroDetail);
-    tvLivroNomeDetail.setText(livro.getNomeLivro());
-    tvLivroDataDetail.setText(livro.getDataLivro());
-    tvLivroDescDetail.setText(livro.getDescLivro());
+        Picasso.get().load(livro.getThumbnail()).into(ivLivro);
+        tvLivroNomeDetail.setText(livro.getTitle());
+        tvLivroDataDetail.setText(livro.getPublishedDate());
+        tvLivroDescDetail.setText(livro.getDescription());
 
     }
-
-
 
 
 

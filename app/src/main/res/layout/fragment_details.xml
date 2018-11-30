@@ -35,17 +35,13 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
-            <TextView
-                android:id="@+id/tvLivroDescDetail"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
+
         </LinearLayout>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvDetail"
+        android:id="@+id/tvLivroDescDetail"
         android:textAlignment="center"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
