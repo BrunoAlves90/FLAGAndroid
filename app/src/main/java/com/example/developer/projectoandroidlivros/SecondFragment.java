@@ -95,7 +95,7 @@ public class SecondFragment extends Fragment implements SetOnClickListBook {
         Bundle bundle = new Bundle();
         bundle.putString("{id}", livros.livros.get(position).getId());
         detailFragment.setArguments(bundle);
-        getActivity().getFragmentManager().beginTransaction().replace(R.id.rvLivros,detailFragment,"detail").addToBackStack(null).commit();
+        getActivity().getFragmentManager().beginTransaction().replace(R.id.rvLivros, detailFragment, "detail").addToBackStack(null).commit();
 
 
     }
