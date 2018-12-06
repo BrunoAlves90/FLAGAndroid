@@ -1,68 +1,44 @@
+
 package com.example.developer.projectoandroidlivros.model;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Livro {
 
-    @SerializedName("id")
+    @SerializedName("kind")
     @Expose
-    private String id;
-    @SerializedName("title")
+    private String kind;
+    @SerializedName("totalItems")
     @Expose
-    private String title;
-    @SerializedName("publishedDate")
+    private Integer totalItems;
+    @SerializedName("items")
     @Expose
-    private String publishedDate;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("smallThumbnaill")
-    @Expose
+    private List<Item> items = null;
 
-    private String thumbnail;
-
-    public String getId() {
-        return id;
+    public String getKind() {
+        return kind;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 
-    public String getTitle() {
-        return title;
+    public Integer getTotalItems() {
+        return totalItems;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTotalItems(Integer totalItems) {
+        this.totalItems = totalItems;
     }
 
-    public String getPublishedDate() {
-        return publishedDate;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setPublishedDate(String publishedDate) {
-        this.publishedDate = publishedDate;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
 }
-
-
-
-

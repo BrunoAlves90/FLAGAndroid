@@ -1,20 +1,32 @@
 package com.example.developer.projectoandroidlivros;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+
 
 import com.example.developer.projectoandroidlivros.adapter.ListLivroAdapter;
-import com.example.developer.projectoandroidlivros.adapter.SetOnClickListBook;
+import com.example.developer.projectoandroidlivros.model.Book;
 import com.example.developer.projectoandroidlivros.model.GetLivroService;
-import com.example.developer.projectoandroidlivros.model.Livro;
-import com.example.developer.projectoandroidlivros.model.Livros;
+import com.example.developer.projectoandroidlivros.model.Books;
+import com.example.developer.projectoandroidlivros.adapter.ListLivroAdapter;
+import com.example.developer.projectoandroidlivros.adapter.SetOnClickListLivro;
+
+
+
+
+
 
 import java.util.List;
 
@@ -24,90 +36,88 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SecondFragment extends Fragment implements SetOnClickListBook {
+public class SecondFragment extends Fragment implements  SetOnClickListLivro{
     private View view;
     private RecyclerView listLivro;
     private RecyclerView.LayoutManager layoutManager;
-    private Livros livros;
+    private Books books;
     private String assunto;
 
 
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup rvLivros, Bundle savedInstanceState) {
-        view = LayoutInflater.from(rvLivros.getContext()).inflate(R.layout.fragment_, rvLivros, false);
+
+        view = inflater.inflate(R.layout.fragment_, rvLivros, false);
 
         return view;
 
     }
 
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
 
-            listLivro = view.findViewById(R.id.listLivros);
-            listLivro.setHasFixedSize(true);
-            layoutManager = new LinearLayoutManager(getActivity());
-            listLivro.setLayoutManager(layoutManager);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-            livros = new Livros();
+        listLivro = (RecyclerView) view.findViewById(R.id.listLivros);
+        listLivro.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        listLivro.setLayoutManager(layoutManager);
 
-            Retrofit retrofit = new Retrofit.
-                    Builder().
-                    addConverterFactory(GsonConverterFactory.create()).
-                    baseUrl("https://www.googleapis.com/books/v1/").build();
-            GetLivroService livroService = retrofit.create(GetLivroService.class);
+        books = new Books();
 
 
-            Call<Livros> livrosCall = livroService.getListLivro("android");
+        Retrofit retrofit = new Retrofit.
+                Builder().
+                addConverterFactory(GsonConverterFactory.create()).
+                baseUrl("https://www.googleapis.com/books/v1/").build();
 
-        livrosCall.enqueue(new Callback<Livros>() {
+        GetLivroService livroService = retrofit.create(GetLivroService.class);
+
+
+        Call<Books> livrosCall = livroService.getListLivro("android");
+
+        livrosCall.enqueue(new Callback<Books>() {
+
             @Override
-            public void onResponse(Call<Livros> call, Response<Livros> response) {
+            public void onResponse(Call<Books> call, Response<Books> response) {
+
                 if (response.isSuccessful()) {
                     Log.d("RETROFIT", "OK");
 
 
-                    livros = response.body();
+                    books = response.body();
 
-                    ListLivroAdapter listLivroAdapter = new ListLivroAdapter(getActivity(), livros.livros,SecondFragment.this);
 
-                    listLivro.setAdapter(listLivroAdapter);
+                    ListLivroAdapter listlivroAdapter = new ListLivroAdapter(getActivity(), books.books, SecondFragment.this);
+
+                    listLivro.setAdapter(listlivroAdapter);
+
 
                 } else {
-                    Log.d("RETROFIT", "NAO OK");
+                    Log.d("RETROFIT", "OK");
                 }
+
             }
 
             @Override
-            public void onFailure(Call<Livros> call, Throwable t) {
+            public void onFailure(Call<Books> call, Throwable t) {
                 Log.d("RETROFIT", "FAIL");
                 Log.d("RETROFIT", t.getMessage());
 
-
             }
+
         });
 
     }
 
-    @Override
-    public void setBookItemClick(int position) {
-        DetailFragment detailFragment = new DetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("{id}", livros.livros.get(position).getId());
-        detailFragment.setArguments(bundle);
-        getActivity().getFragmentManager().beginTransaction().replace(R.id.rvLivros, detailFragment, "detail").addToBackStack(null).commit();
-
+            @Override
+            public void setBookItemClick(int position) {
+                DetailFragment detailFragment = new DetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", books.books.get(position).getId());
+                detailFragment.setArguments(bundle);
+                getActivity().getFragmentManager().beginTransaction().replace(R.id.rvLivros, detailFragment, "detail").addToBackStack(null).commit();
+            }
 
     }
-}
-
-
-
-
-
-
-
-
 
 
 

@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Livros {
+public class Books {
 
     @SerializedName("items")
     @Expose
-    public List<Livro> livros;
+    public List<Book> books;
 
 
 
