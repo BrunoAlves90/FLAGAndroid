@@ -6,8 +6,8 @@ import retrofit2.http.Query;
 
 public interface GetLivroService {
 
-        @GET("volumes")
-        Call<Books> getListLivro(@Query("q") String tema);
+        @GET(".")
+        Call<Books> getListLivro(@Query("q") String id);
     }
 
 

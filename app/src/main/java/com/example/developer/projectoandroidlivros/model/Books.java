@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Books {
+public class Books extends VolumeInfo {
 
     @SerializedName("items")
     @Expose

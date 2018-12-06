@@ -35,41 +35,37 @@ public class DetailFragment extends Fragment {
 
     }
 
-    @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup rvLivros, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_details, rvLivros, false);
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+    public void onActivityCreated( Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int id = getArguments().getInt("id");
-        Retrofit retrofit = new Retrofit.
-                Builder().
-                baseUrl("https://www.googleapis.com/books/v1/volumes?").
+        String id = getArguments().getString("id");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://www.googleapis.com/books/v1/volumes/").
                 addConverterFactory(GsonConverterFactory.create()).
                 build();
 
         GetDetailLivro detailLivro = retrofit.create(GetDetailLivro.class);
 
-        Call<List<Book>> livroCall = detailLivro.getDetailBook(id);
+        Call<List<Book>> livroCall = detailLivro.getDetailBook(" ");
 
 
         livroCall.enqueue(new Callback<List<Book>>() {
-            @Override
             public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Retrofit", "ok");
+                    Log.d("RETROFIT", "OK");
 
                     prepareView(response.body().get(0));
                 } else {
-                    Log.d("Retrofit", "FAIL");
+                    Log.d("RETROFIT", "NOTOK");
                 }
             }
 
-            @Override
             public void onFailure(Call<List<Book>> call, Throwable t) {
                 Log.d("RETROFIT", "FAIL");
 
@@ -87,16 +83,11 @@ public class DetailFragment extends Fragment {
     tvLivroDescDetail = (TextView) view.findViewById(R.id.tvLivroDescDetail);
 
 
-        Picasso.get().load(book.getThumbnail()).into(ivLivro);
-        tvLivroNomeDetail.setText(book.getTitulo());
-        tvLivroDataDetail.setText(book.getData());
-        tvLivroDescDetail.setText(book.getDescricao());
+        //Picasso.get().load(book.getThumbnail()).into(ivLivro);
+        tvLivroNomeDetail.setText(book.getTitle());
+        tvLivroDataDetail.setText(book.getPublishedDate());
+        tvLivroDescDetail.setText(book.getDescription());
 
     }
-
-
-
-
-
 
 }

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.example.developer.projectoandroidlivros.MainActivity;
 import com.example.developer.projectoandroidlivros.R;
 import com.example.developer.projectoandroidlivros.model.Book;
 import com.example.developer.projectoandroidlivros.model.Books;
@@ -23,7 +24,7 @@ import java.util.List;
 
 import retrofit2.Callback;
 
-public class ListLivroAdapter extends RecyclerView.Adapter<ListLivroAdapter.LivroViewHolder> implements ListAdapter {
+public class ListLivroAdapter extends RecyclerView.Adapter<ListLivroAdapter.LivroViewHolder> {
 
     private Context context;
     private List<Book> livroList;
@@ -40,56 +41,6 @@ public class ListLivroAdapter extends RecyclerView.Adapter<ListLivroAdapter.Livr
 
 
 
-    @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-
-    }
-
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-        return false;
-    }
-
     public static class LivroViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvNome;
@@ -97,13 +48,11 @@ public class ListLivroAdapter extends RecyclerView.Adapter<ListLivroAdapter.Livr
         TextView tvLivroDetails;
         ImageView ivLivro;
 
-        CardView cardView;
 
 
-        public LivroViewHolder(@NonNull View itemView) {
+        public LivroViewHolder( View itemView) {
 
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.cvItem);
             ivLivro = (ImageView) itemView.findViewById(R.id.ivLivro);
             tvNome = (TextView) itemView.findViewById(R.id.tvLivroNome);
             tvLivroData = (TextView) itemView.findViewById(R.id.tvLivroData);
@@ -131,10 +80,9 @@ public class ListLivroAdapter extends RecyclerView.Adapter<ListLivroAdapter.Livr
 
         public void onBindViewHolder( LivroViewHolder livroViewHolder, int position) {
 
-            livroViewHolder.tvNome.setText(livroList.get(position).getTitulo());
-            livroViewHolder.tvLivroData.setText(livroList.get(position).getData());
-            livroViewHolder.tvLivroDetails.setText(livroList.get(position).getDescricao());
-            Picasso.get().load(livroList.get(position).getThumbnail()).into(livroViewHolder.ivLivro);
+            livroViewHolder.tvNome.setText(livroList.get(position).getTitle());
+            livroViewHolder.tvLivroData.setText(livroList.get(position).getPublishedDate());
+            livroViewHolder.tvLivroDetails.setText(livroList.get(position).getDescription());
 
         }
 

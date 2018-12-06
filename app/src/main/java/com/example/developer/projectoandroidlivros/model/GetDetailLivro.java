@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 
 public interface GetDetailLivro {
 
-    @GET("{id}")
-    Call<List<Book>> getDetailBook(@Path("id") int id);
+    @GET(".}")
+    Call<List<Book>> getDetailBook(@Path("id") String id);
 }
 

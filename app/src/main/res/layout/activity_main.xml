@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.RecyclerView
+<LinearLayout
     android:id="@+id/rvLivros"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,4 +10,4 @@
     android:scrollbars="vertical"
     tools:context=".MainActivity">
 
-</android.support.v7.widget.RecyclerView>
+</LinearLayout>

@@ -1,72 +1,46 @@
+
 package com.example.developer.projectoandroidlivros.model;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Book {
 
 
+public class Book extends VolumeInfo {
 
-
-    @SerializedName("id")
+    @SerializedName("kind")
     @Expose
-    private Integer id;
-    @SerializedName("titulo")
+    private String kind;
+    @SerializedName("totalItems")
     @Expose
-    private String titulo;
-    @SerializedName("data")
+    private Long totalItems;
+    @SerializedName("items")
     @Expose
-    private String data;
-    @SerializedName("descrição")
-    @Expose
-    private String descricao;
-    @SerializedName("Thumbnail")
-    @Expose
-    private Integer Thumbnail;
+    private List<Item> items = null;
 
-
-    public Integer getId() {
-        return id;
+    public String getKind() {
+        return kind;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public Long getTotalItems() {
+        return totalItems;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTotalItems(Long totalItems) {
+        this.totalItems = totalItems;
     }
 
-    public String getData() {
-        return data;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Integer getThumbnail() {
-        return Thumbnail;
-    }
-
-    public void setThumbnail(Integer thumbnail) {
-        Thumbnail = thumbnail;
-    }
 }
-
-
-
-
-

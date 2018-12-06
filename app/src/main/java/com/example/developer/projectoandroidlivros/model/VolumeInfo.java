@@ -248,6 +248,11 @@ public class VolumeInfo {
 
     public void setCanonicalVolumeLink(String canonicalVolumeLink) {
         this.canonicalVolumeLink = canonicalVolumeLink;
+
+
     }
 
+    public List<VolumeInfo> volumeinfo;
 }
+
+
