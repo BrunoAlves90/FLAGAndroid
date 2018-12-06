@@ -1,9 +1,8 @@
 package com.example.developer.projectoandroidlivros;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.developer.projectoandroidlivros.model.GetDetailBook;
-import com.example.developer.projectoandroidlivros.model.Livro;
+import com.example.developer.projectoandroidlivros.model.Book;
+import com.example.developer.projectoandroidlivros.model.GetDetailLivro;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,29 +35,31 @@ public class DetailFragment extends Fragment {
 
     }
 
-
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup rvLivros, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_details, rvLivros, false);
         return view;
     }
 
-
-    public void onActivityCreated( Bundle savedInstanceState) {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        String id = getArguments().getString("id");
+        int id = getArguments().getInt("id");
         Retrofit retrofit = new Retrofit.
                 Builder().
                 baseUrl("https://www.googleapis.com/books/v1/volumes?").
                 addConverterFactory(GsonConverterFactory.create()).
                 build();
 
-        GetDetailBook detailBook = retrofit.create(GetDetailBook.class);
+        GetDetailLivro detailLivro = retrofit.create(GetDetailLivro.class);
 
-        Call<List<Livro>> livroCall = detailBook.getDetailBook(id);
+        Call<List<Book>> livroCall = detailLivro.getDetailBook(id);
 
-        livroCall.enqueue(new Callback<List<Livro>>() {
-            public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response) {
+
+        livroCall.enqueue(new Callback<List<Book>>() {
+            @Override
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
                 if (response.isSuccessful()) {
                     Log.d("Retrofit", "ok");
 
@@ -68,7 +69,8 @@ public class DetailFragment extends Fragment {
                 }
             }
 
-            public void onFailure(Call<List<Livro>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
                 Log.d("RETROFIT", "FAIL");
 
             }
@@ -77,18 +79,18 @@ public class DetailFragment extends Fragment {
 
     }
 
-    private void prepareView(Livro livro) {
+    private void prepareView(Book book) {
 
-    ivLivro = view.findViewById(R.id.ivLivro);
-    tvLivroNomeDetail = view.findViewById(R.id.tvLivroNomeDetail);
-    tvLivroDataDetail = view.findViewById(R.id.tvLivroDataDetail);
-    tvLivroDescDetail = view.findViewById(R.id.tvLivroDescDetail);
+    ivLivro = (ImageView) view.findViewById(R.id.ivLivro);
+    tvLivroNomeDetail = (TextView) view.findViewById(R.id.tvLivroNomeDetail);
+    tvLivroDataDetail = (TextView) view.findViewById(R.id.tvLivroDataDetail);
+    tvLivroDescDetail = (TextView) view.findViewById(R.id.tvLivroDescDetail);
 
 
-        Picasso.get().load(livro.getThumbnail()).into(ivLivro);
-        tvLivroNomeDetail.setText(livro.getTitle());
-        tvLivroDataDetail.setText(livro.getPublishedDate());
-        tvLivroDescDetail.setText(livro.getDescription());
+        Picasso.get().load(book.getThumbnail()).into(ivLivro);
+        tvLivroNomeDetail.setText(book.getTitulo());
+        tvLivroDataDetail.setText(book.getData());
+        tvLivroDescDetail.setText(book.getDescricao());
 
     }
 
